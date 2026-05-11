@@ -2,6 +2,7 @@ import {
     type UpgradeResult,
     type UpgradeChances,
     type UpgradeOutcome,
+    type UpgradeChanceBreakdown,
 } from "../types/upgrade"
 import { drawBall, makeBallPool, rollDice } from "./util";
 
@@ -95,6 +96,47 @@ export function getUpgradeBalls(): UpgradeChances {
         destroyDice: {
             sides: 10,
             successRoll: 3,
+        }
+    }
+}
+
+// 강화 확률 수치 계산 함수 
+export function getUpgradeChanceBreakdown(upgradeChances: UpgradeChances): UpgradeChanceBreakdown {
+    const basicStageBallCount = upgradeChances.normalSuccessBall + upgradeChances.keepBall + upgradeChances.normalFailBall;
+    
+    return {
+        basicResult: {
+            success: upgradeChances.normalSuccessBall / basicStageBallCount,
+            keep: upgradeChances.keepBall / basicStageBallCount,
+            fail: upgradeChances.normalFailBall / basicStageBallCount,
+        },
+
+        additionalResult: {
+            superSuccess: upgradeChances.superSuccessDice.successRoll / upgradeChances.superSuccessDice.sides,
+            ultraSuccess: upgradeChances.ultraSuccessDice.successRoll / upgradeChances.ultraSuccessDice.sides,
+            bigFail: upgradeChances.bigFailDice.successRoll / upgradeChances.bigFailDice.sides,
+            destroy: upgradeChances.destroyDice.successRoll / upgradeChances.destroyDice.sides,
+        },
+
+        finalResult: {
+            normalSuccess: (upgradeChances.normalSuccessBall / basicStageBallCount)
+                                * (1 - upgradeChances.superSuccessDice.successRoll / upgradeChances.superSuccessDice.sides),
+            superSuccess: (upgradeChances.normalSuccessBall / basicStageBallCount)
+                                * (upgradeChances.superSuccessDice.successRoll / upgradeChances.superSuccessDice.sides)
+                                * (1 - upgradeChances.ultraSuccessDice.successRoll / upgradeChances.ultraSuccessDice.sides),
+            ultraSuccess: (upgradeChances.normalSuccessBall / basicStageBallCount)
+                                * (upgradeChances.superSuccessDice.successRoll / upgradeChances.superSuccessDice.sides)
+                                * (upgradeChances.ultraSuccessDice.successRoll / upgradeChances.ultraSuccessDice.sides),
+            keep: upgradeChances.keepBall / basicStageBallCount,
+            normalFail: (upgradeChances.normalFailBall / basicStageBallCount)
+                                * (1 - upgradeChances.bigFailDice.successRoll / upgradeChances.bigFailDice.sides),
+            bigFail: (upgradeChances.normalFailBall / basicStageBallCount)
+                                * (upgradeChances.bigFailDice.successRoll / upgradeChances.bigFailDice.sides)
+                                * (1 - upgradeChances.destroyDice.successRoll / upgradeChances.destroyDice.sides),
+            destroy: (upgradeChances.normalFailBall / basicStageBallCount)
+                                * (upgradeChances.bigFailDice.successRoll / upgradeChances.bigFailDice.sides)
+                                * (upgradeChances.destroyDice.successRoll / upgradeChances.destroyDice.sides),
+
         }
     }
 }

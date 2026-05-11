@@ -40,6 +40,36 @@ export type UpgradeChances = {
 
 }
 
+// 강화 확률 수치 데이터 
+export type UpgradeChanceBreakdown = {
+
+    // 기본 판정 확률
+    basicResult: {
+        success: number;
+        keep: number;
+        fail: number;
+    };
+
+    // 추가 확률 (조건부 확률이 아닌 독립 확률)
+    additionalResult: {
+        superSuccess: number;
+        ultraSuccess: number;
+        bigFail: number;
+        destroy: number;
+    };
+
+    // 최종 확률 (조건부 확률)
+    finalResult: {
+        normalSuccess: number;
+        superSuccess: number;
+        ultraSuccess: number;
+        keep: number;
+        normalFail: number;
+        bigFail: number;
+        destroy: number;
+    }
+}
+
 // 강화 결과 데이터
 export type UpgradeOutcome = {
     
@@ -49,3 +79,4 @@ export type UpgradeOutcome = {
     // 레벨 변화
     levelDelta: number;
 }
+

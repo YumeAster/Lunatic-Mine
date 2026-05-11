@@ -1,7 +1,5 @@
-import './App.css'
-
 import { useState } from 'react';
-import { executeUpgrade, getUpgradeBalls, getUpgradeOutcome } from './engine/upgrade';
+import { executeUpgrade, getUpgradeBalls, getUpgradeChanceBreakdown, getUpgradeOutcome } from './engine/upgrade';
 import { UPGRADE_RESULT_LABELS } from './data/upgradeLabels';
 
 function App() {
@@ -17,12 +15,14 @@ function App() {
     setLastResult(UPGRADE_RESULT_LABELS[finalResult.result])
   };
 
+  const breakdown = getUpgradeChanceBreakdown(getUpgradeBalls());
+
   return (
-    <div>
-      <h1>Lunatic Mine</h1>
-      <p>레벨 : {level}</p>
-      <p>결과 : {lastResult}</p>
-      <button onClick={handleUpgradeTest}>강화 테스트</button>
+    <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
+      <div className="rounded-2xl border bg-white p-8 shadow-sm">
+        <h1 className="text-3xl font-bold">Lunatic Mine</h1>
+        <p className="mt-2 text-zinc-600">Tailwind 적용 테스트</p>
+      </div>
     </div>
   )
 }
