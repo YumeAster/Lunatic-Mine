@@ -1,15 +1,18 @@
 import {
     type UpgradeResult,
-    type DiceRule,
+    type DiceRoll,
     type UpgradeChances,
     type UpgradeOutcome,
 } from "../types/upgrade"
 
-export function rollDice(rule: DiceRule): boolean {
+// 주사위 굴림 함수
+export function rollDice(rule: DiceRoll): boolean {
     const rolledNumber = Math.floor(Math.random() * rule.sides) + 1;
     return rolledNumber <= rule.successRoll;
 }
 
+// 업그레이드 결과 및 레벨 변화를 리턴하는 함수.
+// 레벨 상승폭 관련된 업그레이드는 여기서 처리.
 export function getUpgradeOutcome(result: UpgradeResult): UpgradeOutcome {
     let delta = 0;
     switch(result) {
@@ -42,6 +45,28 @@ export function getUpgradeOutcome(result: UpgradeResult): UpgradeOutcome {
     }
 }
 
+// 강화 판정 확률 (공 뽑기 및 주사위 굴리기)을 return하는 함수.
+// 강화 확률 관련된 업그레이드는 여기서 처리.
 export function getUpgradeBalls(): UpgradeChances {
-    
+    return {
+        normalSuccessBall: 50,
+        keepBall: 20,
+        normalFailBall: 30,
+        superSuccessDice: {
+            sides: 10,
+            successRoll: 3,
+        },
+        ultraSuccessDice: {
+            sides: 10,
+            successRoll: 3,
+        },
+        bigFailDice: {
+            sides: 10,
+            successRoll: 3,
+        },
+        destroyDice: {
+            sides: 10,
+            successRoll: 3,
+        }
+    }
 }

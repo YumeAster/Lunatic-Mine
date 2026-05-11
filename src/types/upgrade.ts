@@ -10,22 +10,54 @@ const UpgradeResult =  {
 
 export type UpgradeResult = (typeof UpgradeResult)[keyof typeof UpgradeResult];
 
-export type DiceRule = {
+// 주사위 굴림 데이터
+export type DiceRoll = {
+
+    // 주사위의 면체 수
     sides: number;
+
+    // 몇 이하로 숫자가 나오면 성공할 지
     successRoll: number;
+
+    // (prob) = (successRoll) / (sides)
+
 }
 
+
+// 업그레이드 확률 데이터
 export type UpgradeChances = {
+
+    // 일반 성공 확률 공
     normalSuccessBall: number;
-    superSuccessBall: number;
-    ultraSuccessBall: number;
+
+    // 유지 확률 공
     keepBall: number;
+
+    // 일반 실패 확률 공
     normalFailBall: number;
-    bigFailBall: number;
-    destroyBall: number;
+
+
+    // 성공 판정일 시 대박 성공 주사위 굴림
+    superSuccessDice: DiceRoll;
+
+    // 대박 성공 판정일 시 초대박 성공 주사위 굴림
+    ultraSuccessDice: DiceRoll;
+    
+    
+    // 실패 판정일 시 대형 실패 주사위 굴림
+    bigFailDice: DiceRoll;
+
+    // 대형 실패 시 파괴 주사위 굴림
+    destroyDice: DiceRoll;
+
 }
 
+// 강화 결과 데이터
 export type UpgradeOutcome = {
+    
+    // 강화 판정
     result: UpgradeResult;
+
+    // 레벨 변화
     levelDelta: number;
 }

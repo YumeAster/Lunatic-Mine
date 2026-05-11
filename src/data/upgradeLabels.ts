@@ -1,5 +1,6 @@
 import type { UpgradeResult } from "../types/upgrade"
 
+// 강화 결과 문자열 데이터
 export const UPGRADE_RESULT_LABELS: Record<UpgradeResult, string> = {
     NORMAL_SUCCESS: "일반 성공",
     SUPER_SUCCESS: "대박 성공",
