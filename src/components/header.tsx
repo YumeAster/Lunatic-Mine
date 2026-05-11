@@ -1,10 +1,16 @@
-function Header() {
+type HeaderProps = {
+    point: number;
+    ud: number;
+};
+
+function Header({ point, ud }: HeaderProps) {
     return (
-        <header>
-            <div>Lunatic Mine</div>
-            <div>
-                <span>Point: 0</span>
-                <span>UD: 0</span>
+        <header className="h-16 border-b bg-white flex items-center justify-between px-6">
+            <div className="text-2xl font-bold">Lunatic Mine</div>
+
+            <div className="flex items-center gap-4 text-sm">
+                <div>Point: {point}</div>
+                <div>UD: {ud}</div>
             </div>
         </header>
     )
