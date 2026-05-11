@@ -1,3 +1,5 @@
+import type { DiceRoll } from "./util";
+
 const UpgradeResult =  {
     NORMAL_SUCCESS : "NORMAL_SUCCESS",
     SUPER_SUCCESS : "SUPER_SUCCESS",
@@ -9,20 +11,6 @@ const UpgradeResult =  {
 } as const;
 
 export type UpgradeResult = (typeof UpgradeResult)[keyof typeof UpgradeResult];
-
-// 주사위 굴림 데이터
-export type DiceRoll = {
-
-    // 주사위의 면체 수
-    sides: number;
-
-    // 몇 이하로 숫자가 나오면 성공할 지
-    successRoll: number;
-
-    // (prob) = (successRoll) / (sides)
-
-}
-
 
 // 업그레이드 확률 데이터
 export type UpgradeChances = {

@@ -1,14 +1,42 @@
 import {
     type UpgradeResult,
-    type DiceRoll,
     type UpgradeChances,
     type UpgradeOutcome,
 } from "../types/upgrade"
+import { drawBall, makeBallPool, rollDice } from "./util";
 
-// 주사위 굴림 함수
-export function rollDice(rule: DiceRoll): boolean {
-    const rolledNumber = Math.floor(Math.random() * rule.sides) + 1;
-    return rolledNumber <= rule.successRoll;
+
+
+// 강화 판정 함수
+export function executeUpgrade(upgradeChances: UpgradeChances): UpgradeResult {
+    
+    // 성공 / 유지 / 실패 뽑기
+    const upgradeResultPool = makeBallPool<UpgradeResult>(
+        { result: "NORMAL_SUCCESS", count: upgradeChances.normalSuccessBall },
+        { result: "KEEP", count: upgradeChances.keepBall },
+        { result: "NORMAL_FAIL", count: upgradeChances.normalFailBall},
+    )
+
+    const firstResult = drawBall<UpgradeResult>(upgradeResultPool);
+
+    
+    // 2차 판정
+    if (firstResult == "NORMAL_SUCCESS") {
+        return rollDice(upgradeChances.superSuccessDice)
+            ? rollDice(upgradeChances.ultraSuccessDice)
+                ? "ULTRA_SUCCESS"
+                : "SUPER_SUCCESS"
+            : "NORMAL_SUCCESS"
+    } else if (firstResult == "NORMAL_FAIL") {
+        return rollDice(upgradeChances.bigFailDice)
+            ? rollDice(upgradeChances.destroyDice)
+                ? "BIG_FAIL"
+                : "DESTROY"
+            : "NORMAL_FAIL"
+    } else {
+        return "KEEP"
+    }
+
 }
 
 // 업그레이드 결과 및 레벨 변화를 리턴하는 함수.
