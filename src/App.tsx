@@ -19,7 +19,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-100 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       <Header point={100} ud={5}/>
 
       <div className="flex flex-1">

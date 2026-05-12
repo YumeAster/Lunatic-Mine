@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { doUpgrade } from "../../engine/upgrade";
 import { UPGRADE_RESULT_LABELS } from "../../data/upgradeLabels";
+import PickaxeCard from "../../components/PickaxeCard";
+
+// shadcn
+import { Button } from "@/components/ui/button";
+
+// 이미지
+import pickaxeImage from "../../assets/pickaxe.png"
 
 function UpgradePage() {
     const [level, setLevel] = useState(0);
@@ -17,31 +24,22 @@ function UpgradePage() {
     }
 
     return (
-        <div>
-            <h2>일반 강화</h2>
-            <p>현재 레벨 : +{level}</p>
-            <p>최근 결과 : {lastResult}</p>
+        <div className="flex h-full w-full items-center justify-center">
+            <div className="flex flex-col w-full items-center gap-1">
+                <PickaxeCard
+                    name="기본 곡괭이"
+                    level={level}
+                    imageSrc={pickaxeImage}
+                />
 
-            <p>성공: {(upgradeReport.upgradeChanceBreakdown.basicResult.success * 100).toFixed(2)}%</p>
-            <p>유지: {(upgradeReport.upgradeChanceBreakdown.basicResult.keep * 100).toFixed(2)}%</p>
-            <p>실패: {(upgradeReport.upgradeChanceBreakdown.basicResult.fail * 100).toFixed(2)}%</p>
-
-            <hr />
-
-            <p>일반 성공: {(upgradeReport.upgradeChanceBreakdown.finalResult.normalSuccess * 100).toFixed(2)}%</p>
-            <p>대박 성공: {(upgradeReport.upgradeChanceBreakdown.finalResult.superSuccess * 100).toFixed(2)}%</p>
-            <p>초대박 성공: {(upgradeReport.upgradeChanceBreakdown.finalResult.ultraSuccess * 100).toFixed(2)}%</p>
-            <p>유지: {(upgradeReport.upgradeChanceBreakdown.finalResult.keep * 100).toFixed(2)}%</p>
-            <p>일반 실패: {(upgradeReport.upgradeChanceBreakdown.finalResult.normalFail * 100).toFixed(2)}%</p>
-            <p>대형 실패: {(upgradeReport.upgradeChanceBreakdown.finalResult.bigFail * 100).toFixed(2)}%</p>
-            <p>파괴: {(upgradeReport.upgradeChanceBreakdown.finalResult.destroy * 100).toFixed(2)}%</p>
-
-            <button
-                onClick={handleUpgrade}
-                className="mt-6 rounded-lg bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-800"
-            >
-                강화
-            </button>
+                <Button
+                    onClick={handleUpgrade}
+                    className="mt-6 text-lg px-8 h-10 shadow-lg shadow-zinc-900/50 hover:bg-zinc-800 hover:inset-shadow-xs inset-shadow-zinc-900"
+                    size="lg"
+                >
+                    강화
+                </Button>
+            </div>
         </div>
     )
 }

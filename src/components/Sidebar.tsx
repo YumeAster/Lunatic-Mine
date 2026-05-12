@@ -31,7 +31,7 @@ const menuItems = [
 
 function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     return (
-        <aside className="w-56 border-r bg-white p-4">
+        <aside className="w-56 border-r bg-zinc-900 p-4">
             <div className="mb-4 text-sm font-semibold text-zinc-500">메뉴</div>
 
             <div className="flex flex-col gap-2">

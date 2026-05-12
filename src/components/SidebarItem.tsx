@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { Button } from "./ui/button";
 
 type SidebarItemProps = {
     label: string;
@@ -14,19 +15,19 @@ function SidebarItem({
     onClick,
 }: SidebarItemProps) {
     return(
-        <button
+        <Button
             onClick={onClick}
             className={
-                `flex items-center gap-3 rounded-lg px-3 py-2 ${
+                `flex items-center gap-3 rounded-lg px-3 py-2 h-10 ${
                     active
-                        ? "bg-zinc-900 text-white"
-                        : "text-zinc-700 hover:bg-zinc-100"
+                        ? "bg-zinc-100 text-zinc-900"
+                        : "text-zinc-100 hover:bg-zinc-800"
                 }`
             }
         >
             <Icon size={18} />
             <span>{label}</span>
-        </button>
+        </Button>
     );
 }
 

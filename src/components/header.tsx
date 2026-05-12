@@ -5,7 +5,7 @@ type HeaderProps = {
 
 function Header({ point, ud }: HeaderProps) {
     return (
-        <header className="h-16 border-b bg-white flex items-center justify-between px-6">
+        <header className="h-16 border-b bg-zinc-900 flex items-center justify-between px-6">
             <div className="text-2xl font-bold">Lunatic Mine</div>
 
             <div className="flex items-center gap-4 text-sm">
