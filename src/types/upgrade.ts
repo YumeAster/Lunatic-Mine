@@ -10,6 +10,11 @@ const UpgradeResult =  {
     DESTROY : "DESTROY",
 } as const;
 
+export type UpgradeReport = {
+    upgradeOutcome: UpgradeOutcome,
+    upgradeChanceBreakdown: UpgradeChanceBreakdown,
+}
+
 export type UpgradeResult = (typeof UpgradeResult)[keyof typeof UpgradeResult];
 
 // 업그레이드 확률 데이터

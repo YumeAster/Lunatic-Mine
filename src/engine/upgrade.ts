@@ -3,9 +3,31 @@ import {
     type UpgradeChances,
     type UpgradeOutcome,
     type UpgradeChanceBreakdown,
+    type UpgradeReport,
 } from "../types/upgrade"
 import { drawBall, makeBallPool, rollDice } from "./util";
 
+
+// 전체 강화 함수
+export function doUpgrade(): UpgradeReport {
+    // 1. 현재 레벨 받아오기
+    // 아직 DB가 없으므로, 나중에 구현.
+
+    // 2. 강화 확률 받아오기
+    const upgradeChances = getUpgradeBalls();
+    const upgradeChanceBreakdown = getUpgradeChanceBreakdown(upgradeChances);
+
+    // 3. 강화 판정
+    const upgradeResult = executeUpgrade(upgradeChances);
+
+    // 4. 강화 결과값 받아오기
+    const upgradeOutcome = getUpgradeOutcome(upgradeResult);
+
+    return {
+        upgradeOutcome: upgradeOutcome,
+        upgradeChanceBreakdown: upgradeChanceBreakdown,
+    }
+}
 
 
 // 강화 판정 함수
@@ -31,8 +53,8 @@ export function executeUpgrade(upgradeChances: UpgradeChances): UpgradeResult {
     } else if (firstResult == "NORMAL_FAIL") {
         return rollDice(upgradeChances.bigFailDice)
             ? rollDice(upgradeChances.destroyDice)
-                ? "BIG_FAIL"
-                : "DESTROY"
+                ? "DESTROY"
+                : "BIG_FAIL"
             : "NORMAL_FAIL"
     } else {
         return "KEEP"
